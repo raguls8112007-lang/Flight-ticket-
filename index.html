@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Skyfare – Book Flights Online</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f3f6fb;--card:#fff;--ink:#0b2545;--mute:#5b6b82;--line:#dbe3ee;--pri:#0b5fd1;--pri-ink:#fff;--acc:#f2a900;--ok:#12805c;--bad:#c62828;--hero:#0b2545;--seat:#e8eef7;--tk:#fff;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#08121f;--card:#10202f;--ink:#e8eef7;--mute:#93a4ba;--line:#223548;--pri:#4d94f5;--pri-ink:#06182e;--hero:#0a1a2e;--seat:#1b2f44;--tk:#10202f}}
+:root[data-theme="dark"]{--bg:#08121f;--card:#10202f;--ink:#e8eef7;--mute:#93a4ba;--line:#223548;--pri:#4d94f5;--pri-ink:#06182e;--hero:#0a1a2e;--seat:#1b2f44;--tk:#10202f}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:400 15px/1.5 Figtree,system-ui,Arial,sans-serif}
+button,input,select{font:inherit;color:inherit}
+header{background:var(--hero);color:#fff;padding:14px 20px;display:flex;align-items:center;gap:12px;justify-content:space-between}
+.logo{font-weight:800;font-size:20px;display:flex;gap:8px;align-items:center;cursor:pointer}.logo svg{width:26px;height:26px}
+header small{opacity:.7}
+.wrap{max-width:1100px;margin:0 auto;padding:20px 16px 60px}
+.steps{display:flex;gap:4px;overflow-x:auto;margin-bottom:18px}
+.steps span{flex:1;min-width:84px;text-align:center;padding:8px 4px;font-size:13px;font-weight:700;color:var(--mute);border-bottom:3px solid var(--line)}
+.steps .on{color:var(--ink);border-color:var(--acc)}.steps .done{color:var(--ok);border-color:var(--ok)}
+.hero{background:var(--hero);color:#fff;margin:-20px -16px 24px;padding:44px 16px 80px;background-image:radial-gradient(circle at 85% 20%,#1b4f9c55,transparent 50%)}
+.hero>div{max-width:1100px;margin:auto}.hero h1{font-size:clamp(28px,5vw,46px);line-height:1.1;margin:0 0 8px;font-weight:800;max-width:15em}.hero p{margin:0;opacity:.8}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px}
+.search{margin-top:-64px;position:relative;box-shadow:0 12px 30px #0b254522}
+.seg{display:inline-flex;background:var(--bg);border-radius:10px;padding:3px;margin-bottom:14px}
+.seg button{border:0;background:none;padding:7px 16px;border-radius:8px;font-weight:700;cursor:pointer;color:var(--mute)}.seg .on{background:var(--pri);color:var(--pri-ink)}
+.grid{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(170px,1fr))}
+label{display:block;font-size:12px;font-weight:700;color:var(--mute);margin-bottom:4px}
+input,select{width:100%;padding:11px 12px;border:1.5px solid var(--line);border-radius:10px;background:var(--card)}
+input:focus,select:focus,button:focus-visible{outline:2px solid var(--pri);outline-offset:1px}
+input.err,select.err{border-color:var(--bad)}.em{color:var(--bad);font-size:12px;min-height:16px}
+.btn{background:var(--pri);color:var(--pri-ink);border:0;border-radius:10px;padding:12px 22px;font-weight:800;cursor:pointer}
+.btn.acc{background:var(--acc);color:#2a1d00}.btn.ghost{background:none;color:var(--ink);border:1.5px solid var(--line)}.btn:disabled{opacity:.45;cursor:not-allowed}
+.swap{align-self:end;border:1.5px solid var(--line);background:var(--card);border-radius:50%;width:40px;height:40px;cursor:pointer;margin-bottom:2px}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.sp{justify-content:space-between}
+.lay{display:grid;grid-template-columns:260px 1fr;gap:18px}
+.side{display:grid;grid-template-columns:1fr 300px;gap:18px;align-items:start}
+@media(max-width:820px){.lay,.side{grid-template-columns:1fr}}
+.flt h3{margin:14px 0 6px;font-size:14px}.flt h3:first-child{margin-top:0}.chk{display:flex;gap:8px;align-items:center;padding:3px 0;font-size:14px}.chk input{width:auto}
+.fl{display:grid;grid-template-columns:1.2fr 2.2fr 1fr;gap:12px;align-items:center;margin-bottom:12px;border:1.5px solid var(--line)}
+.fl.sel{border-color:var(--pri);box-shadow:0 0 0 2px var(--pri)}
+@media(max-width:620px){.fl{grid-template-columns:1fr}}
+.air{font-weight:800}.fn{color:var(--mute);font-size:13px}.dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px}
+.tm{display:flex;align-items:center;gap:10px}.tm b{font-size:20px}.tm .ln{flex:1;border-top:2px dotted var(--line);text-align:center;font-size:12px;color:var(--mute);position:relative;top:-2px;padding-top:2px}
+.pr{text-align:right}.pr b{font-size:24px;display:block}
+@media(max-width:620px){.pr{text-align:left;display:flex;justify-content:space-between;align-items:center}}
+.tag{font-size:11px;font-weight:700;background:var(--seat);border-radius:6px;padding:2px 7px;color:var(--mute)}
+.plane{max-width:330px;margin:auto;background:var(--seat);border-radius:90px 90px 24px 24px;padding:50px 20px 20px}
+.sr{display:grid;grid-template-columns:repeat(3,1fr) 22px repeat(3,1fr);gap:6px;margin-bottom:6px;align-items:center}.sr i{font-style:normal;font-size:11px;color:var(--mute);text-align:center}
+.s{aspect-ratio:1;border-radius:7px 7px 3px 3px;border:1.5px solid var(--line);background:var(--card);cursor:pointer;font-size:10px;font-weight:700;padding:0;color:var(--mute)}
+.s.pm{border-color:var(--acc)}.s.tk{background:var(--line);cursor:not-allowed;color:transparent}.s.me{background:var(--pri);color:var(--pri-ink);border-color:var(--pri)}
+.leg{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;color:var(--mute);justify-content:center;margin-bottom:12px}.leg span::before{content:"";display:inline-block;width:12px;height:12px;border-radius:3px;border:1.5px solid var(--line);margin-right:5px;vertical-align:-2px}
+.leg .a::before{background:var(--card)}.leg .p::before{border-color:var(--acc)}.leg .t::before{background:var(--line)}.leg .m::before{background:var(--pri);border-color:var(--pri)}
+.sum dl{margin:0}.sum .r{display:flex;justify-content:space-between;padding:4px 0}.sum .tot{border-top:1.5px solid var(--line);margin-top:8px;padding-top:10px;font-weight:800;font-size:18px}
+.pf{margin-bottom:14px}.lock{color:var(--ok);font-weight:700;font-size:13px}
+.tkt{background:var(--tk);border:1.5px solid var(--line);border-radius:16px;overflow:hidden;margin-bottom:16px}
+.tkt .top{background:var(--hero);color:#fff;padding:14px 18px;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.tkt .bd{padding:18px;display:grid;grid-template-columns:1fr auto;gap:18px;border-bottom:2px dashed var(--line)}
+.big{font-size:34px;font-weight:800;line-height:1}.rt{display:flex;gap:16px;align-items:center;margin:8px 0}
+.bar{width:110px;height:64px;background:repeating-linear-gradient(90deg,var(--ink) 0 2px,transparent 2px 4px,var(--ink) 4px 5px,transparent 5px 9px)}
+table{width:100%;border-collapse:collapse;font-size:14px}th,td{text-align:left;padding:6px 8px;border-bottom:1px solid var(--line)}
+.ok{width:56px;height:56px;border-radius:50%;background:var(--ok);color:#fff;display:grid;place-items:center;font-size:30px;margin:0 auto 10px}
+.spin{width:22px;height:22px;border:3px solid #fff5;border-top-color:#fff;border-radius:50%;animation:sp 1s linear infinite;display:inline-block;vertical-align:-5px}@keyframes sp{to{transform:rotate(360deg)}}
+.hide{display:none}.note{font-size:12px;color:var(--mute)}
+@media print{header,.steps,.noprint,.hero{display:none!important}body{background:#fff}.wrap{padding:0}.card{border:0;padding:0}}
+@media(prefers-reduced-motion:reduce){.spin{animation-duration:3s}}
+</style></head><body>
+<header><div class="logo" onclick="go(0)"><svg viewBox="0 0 24 24" fill="#f2a900"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5z"/></svg>Skyfare</div><small>Secure demo booking</small></header>
+<div class="wrap"><div class="steps" id="steps"></div><div id="app"></div></div>
+<script>
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const AP=[["DEL","Delhi"],["BOM","Mumbai"],["DXB","Dubai"],["LHR","London"],["CDG","Paris"],["FRA","Frankfurt"],["JFK","New York"],["SFO","San Francisco"],["LAX","Los Angeles"],["SIN","Singapore"],["HND","Tokyo"],["SYD","Sydney"]];
+const AL=[{n:"Aero Meridian",c:"AM",k:"#0b5fd1"},{n:"Polar Wings",c:"PW",k:"#12805c"},{n:"Sunrise Air",c:"SR",k:"#e67e22"},{n:"Zenith Airways",c:"ZA",k:"#8e44ad"},{n:"Coral Jet",c:"CJ",k:"#c0392b"}];
+const STEPS=["Search","Flights","Seats","Passengers","Payment","Ticket"];
+const city=c=>AP.find(a=>a[0]==c)[1];
+const h=s=>{let x=2166136261;for(const c of s){x^=c.charCodeAt(0);x=Math.imul(x,16777619)}return x>>>0};
+const rng=a=>()=>{a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296};
+const T=m=>{m%=1440;return String(m/60|0).padStart(2,"0")+":"+String(m%60).padStart(2,"0")};
+const D=m=>`${m/60|0}h ${String(m%60).padStart(2,"0")}m`;
+const $$$=n=>"$"+n.toLocaleString("en-US",{minimumFractionDigits:0,maximumFractionDigits:2});
+const fd=d=>new Date(d+"T00:00").toLocaleDateString("en-US",{weekday:"short",day:"numeric",month:"short",year:"numeric"});
+const iso=o=>{const d=new Date();d.setDate(d.getDate()+o);return d.toISOString().slice(0,10)};
+function gen(a,b,date){const r=rng(h(a+b+date)),base=100+h([a,b].sort().join())%600,out=[];
+for(let i=0;i<10;i++){const al=AL[r()*AL.length|0],st=r()<.35?1:0,dep=300+i*105+(r()*40|0),dur=base+st*(70+(r()*80|0))+(r()*30|0),price=Math.round((base*.35+60)*(.8+r()*.8)*(st?.82:1));
+out.push({id:a+b+date+i,al,fn:al.c+(100+(r()*900|0)),dep,dur,arr:dep+dur,price,st,from:a,to:b,date})}return out}
+let S={trip:"round",from:"DEL",to:"LHR",dep:iso(14),ret:iso(21),pax:1,step:0,legs:[],sel:[],seats:[[],[]],cur:0,pp:[],pnr:""};
+let F={};
+function go(n){S.step=n;scrollTo(0,0);render()}
+function render(){$("#steps").innerHTML=S.step==0?"":STEPS.map((s,i)=>`<span class="${i==S.step?"on":i<S.step?"done":""}">${i<S.step?"✓ ":""}${s}</span>`).join("");[home,results,seatsV,paxV,payV,doneV][S.step]()}
+const opts=v=>AP.map(a=>`<option value="${a[0]}" ${a[0]==v?"selected":""}>${a[1]} (${a[0]})</option>`).join("");
+function home(){$("#app").innerHTML=`<div class="hero"><div><h1>Find your next flight in a few taps</h1><p>Compare fares across airlines, pick your seat and fly.</p></div></div>
+<div class="card search"><div class="seg" role="tablist"><button class="${S.trip=="one"?"on":""}" onclick="S.trip='one';saveF();home()">One way</button><button class="${S.trip=="round"?"on":""}" onclick="S.trip='round';saveF();home()">Round trip</button></div>
+<div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(150px,1fr)) 40px repeat(auto-fit,minmax(150px,1fr))">
+<div><label for="from">From</label><select id="from">${opts(S.from)}</select></div>
+<button class="swap" aria-label="Swap" onclick="saveF();[S.from,S.to]=[S.to,S.from];home()">⇄</button>
+<div><label for="to">To</label><select id="to">${opts(S.to)}</select></div></div>
+<div class="grid" style="margin-top:12px"><div><label for="dep">Departure</label><input type="date" id="dep" min="${iso(0)}" value="${S.dep}"></div>
+<div class="${S.trip=="one"?"hide":""}"><label for="ret">Return</label><input type="date" id="ret" min="${iso(0)}" value="${S.ret}"></div>
+<div><label for="pax">Passengers</label><select id="pax">${[1,2,3,4,5,6,7,8,9].map(n=>`<option ${n==S.pax?"selected":""}>${n}</option>`).join("")}</select></div>
+<div style="align-self:end"><button class="btn acc" style="width:100%" onclick="search()">Search flights</button></div></div><div class="em" id="se"></div></div>`}
+function saveF(){if(!$("#from"))return;S.from=$("#from").value;S.to=$("#to").value;S.dep=$("#dep").value;S.ret=$("#ret").value;S.pax=+$("#pax").value}
+function search(){saveF();let e="";if(S.from==S.to)e="Choose different departure and arrival cities.";else if(!S.dep)e="Pick a departure date.";else if(S.trip=="round"&&(!S.ret||S.ret<S.dep))e="Return date must be on or after the departure date.";
+if(e){$("#se").textContent=e;return}
+S.legs=[gen(S.from,S.to,S.dep)];if(S.trip=="round")S.legs.push(gen(S.to,S.from,S.ret));S.sel=[null,null];S.seats=[[],[]];S.cur=0;resetF();go(1)}
+function resetF(){const l=S.legs[S.cur],p=l.map(f=>f.price);F={max:Math.max(...p),dur:Math.max(...l.map(f=>f.dur)),al:new Set(l.map(f=>f.al.c)),tm:new Set(["m","a","e"]),sort:"price"}}
+const bk=f=>f.dep<720?"m":f.dep<1020?"a":"e";
+function results(){const l=S.legs[S.cur],p=l.map(f=>f.price),mx=Math.max(...p),mn=Math.min(...p),md=Math.max(...l.map(f=>f.dur)),n=Math.min(...l.map(f=>f.dur));
+const tabs=S.legs.length>1?`<div class="seg">${S.legs.map((x,i)=>`<button class="${i==S.cur?"on":""}" onclick="S.cur=${i};resetF();results()">${i?"Return":"Outbound"} ${S.sel[i]?"✓":""}</button>`).join("")}</div>`:"";
+$("#app").innerHTML=`<div class="row sp"><div><h2 style="margin:0">${city(l[0].from)} → ${city(l[0].to)}</h2><span class="note">${fd(l[0].date)} · ${S.pax} passenger${S.pax>1?"s":""}</span></div><button class="btn ghost" onclick="go(0)">Modify search</button></div><div style="margin:14px 0">${tabs}</div>
+<div class="lay"><aside class="card flt"><h3>Max price: <span id="pv">${$$$(F.max)}</span></h3><input type="range" min="${mn}" max="${mx}" value="${F.max}" oninput="F.max=+this.value;list()">
+<h3>Max duration: <span id="dv">${D(F.dur)}</span></h3><input type="range" min="${n}" max="${md}" value="${F.dur}" oninput="F.dur=+this.value;list()">
+<h3>Airlines</h3>${AL.filter(a=>l.some(f=>f.al.c==a.c)).map(a=>`<label class="chk"><input type="checkbox" ${F.al.has(a.c)?"checked":""} onchange="tg(F.al,'${a.c}',this.checked)"><span class="dot" style="background:${a.k}"></span>${a.n}</label>`).join("")}
+<h3>Departure time</h3>${[["m","Morning (before 12:00)"],["a","Afternoon (12:00–17:00)"],["e","Evening (after 17:00)"]].map(t=>`<label class="chk"><input type="checkbox" ${F.tm.has(t[0])?"checked":""} onchange="tg(F.tm,'${t[0]}',this.checked)">${t[1]}</label>`).join("")}
+<h3>Sort by</h3><select onchange="F.sort=this.value;list()"><option value="price">Cheapest</option><option value="dur">Fastest</option><option value="dep">Earliest departure</option></select></aside>
+<div><div id="fl"></div><div class="row sp card noprint" style="position:sticky;bottom:8px"><span id="ss" class="note"></span><button class="btn" id="go" onclick="go(2)" disabled>Continue to seats</button></div></div></div>`;list()}
+function tg(s,v,on){on?s.add(v):s.delete(v);list()}
+function list(){const l=S.legs[S.cur];$("#pv").textContent=$$$(F.max);$("#dv").textContent=D(F.dur);
+const r=l.filter(f=>f.price<=F.max&&f.dur<=F.dur&&F.al.has(f.al.c)&&F.tm.has(bk(f))).sort((a,b)=>a[F.sort]-b[F.sort]);
+$("#fl").innerHTML=r.length?r.map(f=>`<div class="card fl ${S.sel[S.cur]?.id==f.id?"sel":""}"><div><div class="air"><span class="dot" style="background:${f.al.k}"></span>${f.al.n}</div><div class="fn">${f.fn}</div></div>
+<div class="tm"><div><b>${T(f.dep)}</b><div class="fn">${f.from}</div></div><div class="ln">${D(f.dur)}<br>${f.st?"1 stop":"Non-stop"}</div><div><b>${T(f.arr)}</b>${f.arr>=1440?'<sup class="fn"> +1</sup>':""}<div class="fn">${f.to}</div></div></div>
+<div class="pr"><div><b>${$$$(f.price)}</b><span class="fn">per person</span></div><button class="btn ${S.sel[S.cur]?.id==f.id?"":"ghost"}" onclick="pick('${f.id}')">${S.sel[S.cur]?.id==f.id?"Selected":"Select"}</button></div></div>`).join(""):`<div class="card">No flights match these filters. Raise the price or duration limit, or add more airlines.</div>`;
+const done=S.sel.slice(0,S.legs.length).every(Boolean);$("#go").disabled=!done;$("#ss").textContent=done?`Total fare: ${$$$(fare())}`:S.legs.length>1?"Select one outbound and one return flight":"Select a flight to continue"}
+function pick(id){S.sel[S.cur]=S.legs[S.cur].find(f=>f.id==id);S.seats[S.cur]=[];if(S.legs.length>1&&S.cur==0&&!S.sel[1]){S.cur=1;resetF();results();scrollTo(0,0)}else list()}
+const fare=()=>S.sel.slice(0,S.legs.length).reduce((t,f)=>t+f.price*S.pax,0);
+const seatX=()=>S.seats.reduce((t,a)=>t+a.reduce((u,s)=>u+(parseInt(s)<=4?15:0),0),0);
+const calc=()=>{const f=fare(),x=seatX(),t=Math.round((f+x)*.12*100)/100;return{f,x,t,tot:f+x+t}};
+function summ(){const c=calc();return`<aside class="card sum"><h3 style="margin:0 0 8px">Trip summary</h3>${S.sel.slice(0,S.legs.length).map(f=>`<div class="r"><span>${f.from} → ${f.to}<br><span class="note">${f.al.n} · ${T(f.dep)}</span></span><b>${$$$(f.price*S.pax)}</b></div>`).join("")}
+<div class="r"><span>Seat upgrades</span><span>${$$$(c.x)}</span></div><div class="r"><span>Taxes & fees (12%)</span><span>${$$$(c.t)}</span></div><div class="r tot"><span>Total</span><span>${$$$(c.tot)}</span></div></aside>`}
+function seatsV(){const i=S.cur,f=S.sel[i],r=rng(h(f.id+"seat")),taken=new Set();for(let k=0;k<45;k++)taken.add((1+(r()*20|0))+"ABCDEF"[r()*6|0]);
+const mine=S.seats[i];let rows="";for(let n=1;n<=20;n++){rows+=`<div class="sr">`+[..."ABC"].map(c=>sb(n,c,taken,mine)).join("")+`<i>${n}</i>`+[..."DEF"].map(c=>sb(n,c,taken,mine)).join("")+`</div>`}
+$("#app").innerHTML=`<div class="side"><div class="card"><h2 style="margin:0">Choose seats: ${f.from} → ${f.to}</h2><p class="note">${f.al.n} ${f.fn} · select ${S.pax} seat${S.pax>1?"s":""}. Rows 1–4 are extra-legroom (+$15 each).</p>
+<div class="leg"><span class="a">Available</span><span class="p">Extra legroom</span><span class="t">Taken</span><span class="m">Yours</span></div><div class="plane">${rows}</div>
+<div class="row sp" style="margin-top:16px"><button class="btn ghost" onclick="${i>0?`S.cur=${i-1};seatsV()`:"S.cur=0;go(1)"}">Back</button><span>${mine.length}/${S.pax} selected${mine.length?`: <b>${mine.join(", ")}</b>`:""}</span><button class="btn" ${mine.length==S.pax?"":"disabled"} onclick="${i<S.legs.length-1?`S.cur=${i+1};seatsV();scrollTo(0,0)`:"go(3)"}">${i<S.legs.length-1?"Next: return seats":"Continue"}</button></div></div>${summ()}</div>`}
+function sb(n,c,tk,mine){const id=n+c,on=mine.includes(id);return`<button class="s ${n<=4?"pm":""} ${tk.has(id)?"tk":""} ${on?"me":""}" aria-label="Seat ${id}" ${tk.has(id)?"disabled":""} onclick="st('${id}')">${id}</button>`}
+function st(id){const a=S.seats[S.cur],i=a.indexOf(id);if(i>=0)a.splice(i,1);else if(a.length<S.pax)a.push(id);else{a.shift();a.push(id)}seatsV()}
+function paxV(){while(S.pp.length<S.pax)S.pp.push({});S.pp.length=S.pax;
+$("#app").innerHTML=`<div class="side"><div><div class="card"><h2 style="margin:0 0 4px">Passenger details</h2><p class="note">Enter names exactly as on the travel ID.</p>${S.pp.map((p,i)=>`<fieldset class="pf" style="border:1.5px solid var(--line);border-radius:12px"><legend><b>Passenger ${i+1}</b> · seats ${S.seats.map(a=>a[i]).filter(Boolean).join(" / ")}</legend><div class="grid">
+<div><label for="n${i}">Full name</label><input id="n${i}" value="${p.name||""}" autocomplete="name"><div class="em"></div></div>
+<div><label for="a${i}">Age</label><input id="a${i}" type="number" min="0" max="120" value="${p.age||""}"><div class="em"></div></div>
+<div><label for="g${i}">Gender</label><select id="g${i}">${["","Female","Male","Other"].map(g=>`<option ${p.gender==g?"selected":""}>${g}</option>`).join("")}</select><div class="em"></div></div>
+<div><label for="p${i}">Phone number</label><input id="p${i}" type="tel" value="${p.phone||""}" autocomplete="tel"><div class="em"></div></div>
+<div><label for="e${i}">Email</label><input id="e${i}" type="email" value="${p.email||""}" autocomplete="email"><div class="em"></div></div></div></fieldset>`).join("")}
+<div class="row sp"><button class="btn ghost" onclick="S.cur=${S.legs.length-1};go(2)">Back</button><button class="btn" onclick="pv()">Continue to payment</button></div></div></div>${summ()}</div>`}
+function bad(el,m){el.classList.toggle("err",!!m);el.parentNode.querySelector(".em").textContent=m||"";return!m}
+function pv(){let ok=true;S.pp.forEach((p,i)=>{const g=k=>$("#"+k+i),n=g("n"),a=g("a"),ge=g("g"),ph=g("p"),e=g("e");
+const c=[bad(n,n.value.trim().length<2?"Enter the passenger's full name":""),bad(a,!(a.value!==""&&a.value>=0&&a.value<=120)?"Enter an age from 0 to 120":""),bad(ge,ge.value?"":"Select a gender"),bad(ph,/^\+?\d{7,15}$/.test(ph.value.replace(/[\s-]/g,""))?"":"Enter a valid phone number (7–15 digits)"),bad(e,/^\S+@\S+\.\S+$/.test(e.value)?"":"Enter a valid email address")];
+if(c.includes(false))ok=false;S.pp[i]={name:n.value.trim(),age:a.value,gender:ge.value,phone:ph.value.trim(),email:e.value.trim()}});
+if(ok)go(4);else $(".err")?.focus()}
+function payV(){$("#app").innerHTML=`<div class="side"><div class="card"><div class="row sp"><h2 style="margin:0">Payment</h2><span class="lock">🔒 256-bit encrypted checkout</span></div><p class="note">Demo only: no real payment is taken. Use any 16-digit number, e.g. 4242 4242 4242 4242.</p>
+<div class="pf"><label for="cn">Name on card</label><input id="cn" autocomplete="cc-name"><div class="em"></div></div>
+<div class="pf"><label for="cc">Card number</label><input id="cc" inputmode="numeric" placeholder="0000 0000 0000 0000" maxlength="19" autocomplete="cc-number" oninput="this.value=this.value.replace(/\\D/g,'').slice(0,16).replace(/(.{4})/g,'$1 ').trim()"><div class="em"></div></div>
+<div class="grid"><div class="pf"><label for="cx">Expiry (MM/YY)</label><input id="cx" placeholder="MM/YY" maxlength="5" autocomplete="cc-exp" oninput="let v=this.value.replace(/\\D/g,'').slice(0,4);this.value=v.length>2?v.slice(0,2)+'/'+v.slice(2):v"><div class="em"></div></div>
+<div class="pf"><label for="cv">CVV</label><input id="cv" type="password" inputmode="numeric" maxlength="4" autocomplete="cc-csc"><div class="em"></div></div></div>
+<div class="row sp"><button class="btn ghost" onclick="go(3)">Back</button><button class="btn acc" id="pay" onclick="pay()">Pay ${$$$(calc().tot)}</button></div></div>${summ()}</div>`}
+function pay(){const n=$("#cn"),c=$("#cc"),x=$("#cx"),v=$("#cv"),m=x.value.match(/^(\d\d)\/(\d\d)$/),now=new Date();
+const ex=m&&+m[1]>=1&&+m[1]<=12&&new Date(2000+ +m[2],+m[1],0,23,59)>=now;
+const r=[bad(n,n.value.trim().length<2?"Enter the name on the card":""),bad(c,c.value.replace(/\s/g,"").length==16?"":"Enter a 16-digit card number"),bad(x,ex?"":"Enter a valid, future expiry date"),bad(v,/^\d{3,4}$/.test(v.value)?"":"Enter the 3 or 4 digit CVV")];
+if(r.includes(false))return;$("#pay").disabled=true;$("#pay").innerHTML='<span class="spin"></span> Processing…';
+setTimeout(()=>{const ch="ABCDEFGHJKLMNPQRSTUVWXYZ23456789";S.pnr=Array.from({length:6},()=>ch[Math.random()*ch.length|0]).join("");S.paid=calc();go(5)},1600)}
+function doneV(){const p=S.paid,fl=S.sel.slice(0,S.legs.length);
+$("#app").innerHTML=`<div class="noprint" style="text-align:center;margin-bottom:18px"><div class="ok">✓</div><h2 style="margin:0">Booking confirmed</h2><p class="note">A confirmation was sent to ${S.pp[0].email}. Your PNR is <b style="font-size:18px;color:var(--ink)">${S.pnr}</b></p></div>
+<div class="card" id="ticket">${fl.map((f,i)=>`<div class="tkt"><div class="top"><b>${f.al.n} · ${f.fn}</b><span>E-ticket · PNR ${S.pnr}</span></div><div class="bd"><div><div class="note">${i?"Return":"Outbound"} · ${fd(f.date)}</div>
+<div class="rt"><div><div class="big">${f.from}</div>${city(f.from)}<br><b>${T(f.dep)}</b></div><div style="font-size:26px">✈</div><div><div class="big">${f.to}</div>${city(f.to)}<br><b>${T(f.arr)}${f.arr>=1440?" +1":""}</b></div></div>
+<span class="tag">${D(f.dur)}</span> <span class="tag">${f.st?"1 stop":"Non-stop"}</span></div><div class="bar" aria-hidden="true"></div></div>
+<div style="padding:12px 18px"><table><tr><th>Passenger</th><th>Age/Gender</th><th>Seat</th></tr>${S.pp.map((q,j)=>`<tr><td>${esc(q.name)}</td><td>${esc(q.age)} / ${q.gender}</td><td><b>${S.seats[i][j]}</b></td></tr>`).join("")}</table></div></div>`).join("")}
+<div class="sum"><div class="r"><span>Fare (${S.pax} × passenger)</span><span>${$$$(p.f)}</span></div><div class="r"><span>Seat upgrades</span><span>${$$$(p.x)}</span></div><div class="r"><span>Taxes & fees</span><span>${$$$(p.t)}</span></div><div class="r tot"><span>Total paid</span><span>${$$$(p.tot)}</span></div>
+<p class="note">Contact: ${esc(S.pp[0].phone)} · ${esc(S.pp[0].email)}. Please arrive 3 hours before international departures.</p></div></div>
+<div class="row noprint" style="margin-top:16px;justify-content:center"><button class="btn acc" onclick="print()">Download e-ticket (PDF)</button><button class="btn ghost" onclick="S.pp=[];go(0)">Book another flight</button></div>
+<p class="note noprint" style="text-align:center">In the print dialog, choose “Save as PDF”.</p>`}
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+render();
+</script></body></html>
